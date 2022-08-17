@@ -1,0 +1,6 @@
+{
+    "data": null,
+    "error": {
+        "message": "Key: 'CreateProduct.Price' Error:Field validation for 'Price' failed on the 'required' tag"
+    }
+}

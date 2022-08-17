@@ -1,0 +1,11 @@
+{
+    "data": {
+      "id": "8a7a084e-00ce-4bf4-9cdf-9329868f4af1",
+      "name": "truck",
+      "price": 90000,
+      "quantity": 100,
+      "created_at": "2020-04-19 10:37:40 +0000 UTC",
+      "updated_at": "2020-04-19 10:37:40 +0000 UTC"
+    },
+    "error": null
+}

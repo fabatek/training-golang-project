@@ -1,0 +1,12 @@
+pkgname="orm"
+no-tests="true"
+output="internal/databases/orm"
+[psql]
+  dbname="awstdev"
+  host="localhost"
+  port=5432
+  user="vietle"
+  pass="123456"
+  sslmode="disable"
+  blacklist=["schema_migrations"]
+  schema="public"
