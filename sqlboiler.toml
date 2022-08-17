@@ -2,11 +2,11 @@ pkgname="orm"
 no-tests="true"
 output="internal/databases/orm"
 [psql]
-  dbname="awstdev"
+  dbname="faba_dev"
   host="localhost"
   port=5432
-  user="vietle"
-  pass="123456"
+  user="postgres"
+  pass="postgres"
   sslmode="disable"
   blacklist=["schema_migrations"]
   schema="public"

@@ -1,11 +1,19 @@
+
+test:
+	export GOPROXY="https://proxy.golang.org" && go test ./...
+
+vet: 
+	go vet ./...
+
+
 migrateup:
-	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/dev?sslmode=disable" -verbose up
+	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/faba_dev?sslmode=disable" -verbose up
 
 migratedown:
-	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/dev?sslmode=disable" -verbose down 1
+	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/faba_dev?sslmode=disable" -verbose down 1
 
 migrateforce:
-	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/dev?sslmode=disable" force 2
+	migrate -path ./migrations -database "postgresql://postgres:postgres@localhost:5432/faba_dev?sslmode=disable" force 2
 
 
 # orm volatiletech/sqlboiler mapping at local
