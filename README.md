@@ -1,7 +1,7 @@
 # Training Golang Project
 
 <p align="center">
-  <a href="https://d3hi6wehcrq5by.cloudfront.net/itnavi-blog/2020/11/Golang-l%C3%A0-g%C3%AC-1.jpg"><img src="public/assets/golang.jpeg" alt="Golang"></a>
+  <img src="./public/assets/golang.jpeg" alt="Golang"/>
 </p>
 
 🚀 Training Golang Project: helps you have an overview of a project's structure and commonly applied technologies. In this project describing the basic point of sale products.
