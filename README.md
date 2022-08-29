@@ -77,7 +77,7 @@ curl --location --request POST 'http://[your_host]/api/v1/products' \
 
   + api order list products
 ```shell
-curl --location --request POST 'http://localhost:8000/api/v1/orders' \
+curl --location --request POST 'http://[your_host]/api/v1/orders' \
 --header 'Content-Type: application/json' \
 --data-raw '{
   "user_id": "a2f147ba-0669-4470-96de-7899fc80c5f1",
@@ -134,13 +134,13 @@ curl --location --request POST 'http://localhost:8000/api/v1/orders' \
   - export GOPATH=$HOME/go
   - export PATH=$PATH:$(go env GOPATH)/bin
 
-  #### download and install go migrate:
+  #### Download and install go migrate:
   - link: https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
   - go get github.com/golang-migrate/migrate/v4
 
-  ##### generate db/migrations file
+  ##### Generate db/migrations file
   - migrate create -ext sql -dir [path_to/migrations] [name_file]  
 
-  ##### run test
+  ##### Run test
   - Just run a func test: go test -cover -v [path/to/folder] -run [func_test_name]
   - Run all tests in project: go test ./...
