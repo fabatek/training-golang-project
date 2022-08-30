@@ -24,13 +24,14 @@ import (
 
 // OrderItem is an object representing the database table.
 type OrderItem struct {
-	ID        string      `boil:"id" json:"id" toml:"id" yaml:"id"`
-	ProductID null.String `boil:"product_id" json:"product_id,omitempty" toml:"product_id" yaml:"product_id,omitempty"`
-	Quantity  null.Int64  `boil:"quantity" json:"quantity,omitempty" toml:"quantity" yaml:"quantity,omitempty"`
-	OrderID   null.String `boil:"order_id" json:"order_id,omitempty" toml:"order_id" yaml:"order_id,omitempty"`
-	CreatedAt time.Time   `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
-	UpdatedAt null.Time   `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
-	DeletedAt null.Time   `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
+	ID        string       `boil:"id" json:"id" toml:"id" yaml:"id"`
+	ProductID null.String  `boil:"product_id" json:"product_id,omitempty" toml:"product_id" yaml:"product_id,omitempty"`
+	Quantity  null.Int64   `boil:"quantity" json:"quantity,omitempty" toml:"quantity" yaml:"quantity,omitempty"`
+	OrderID   null.String  `boil:"order_id" json:"order_id,omitempty" toml:"order_id" yaml:"order_id,omitempty"`
+	Price     null.Float32 `boil:"price" json:"price,omitempty" toml:"price" yaml:"price,omitempty"`
+	CreatedAt time.Time    `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	UpdatedAt null.Time    `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
+	DeletedAt null.Time    `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
 
 	R *orderItemR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L orderItemL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -41,6 +42,7 @@ var OrderItemColumns = struct {
 	ProductID string
 	Quantity  string
 	OrderID   string
+	Price     string
 	CreatedAt string
 	UpdatedAt string
 	DeletedAt string
@@ -49,6 +51,7 @@ var OrderItemColumns = struct {
 	ProductID: "product_id",
 	Quantity:  "quantity",
 	OrderID:   "order_id",
+	Price:     "price",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
@@ -59,6 +62,7 @@ var OrderItemTableColumns = struct {
 	ProductID string
 	Quantity  string
 	OrderID   string
+	Price     string
 	CreatedAt string
 	UpdatedAt string
 	DeletedAt string
@@ -67,6 +71,7 @@ var OrderItemTableColumns = struct {
 	ProductID: "order_items.product_id",
 	Quantity:  "order_items.quantity",
 	OrderID:   "order_items.order_id",
+	Price:     "order_items.price",
 	CreatedAt: "order_items.created_at",
 	UpdatedAt: "order_items.updated_at",
 	DeletedAt: "order_items.deleted_at",
@@ -145,6 +150,30 @@ func (w whereHelpernull_Int64) GTE(x null.Int64) qm.QueryMod {
 func (w whereHelpernull_Int64) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
 func (w whereHelpernull_Int64) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
 
+type whereHelpernull_Float32 struct{ field string }
+
+func (w whereHelpernull_Float32) EQ(x null.Float32) qm.QueryMod {
+	return qmhelper.WhereNullEQ(w.field, false, x)
+}
+func (w whereHelpernull_Float32) NEQ(x null.Float32) qm.QueryMod {
+	return qmhelper.WhereNullEQ(w.field, true, x)
+}
+func (w whereHelpernull_Float32) LT(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LT, x)
+}
+func (w whereHelpernull_Float32) LTE(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.LTE, x)
+}
+func (w whereHelpernull_Float32) GT(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GT, x)
+}
+func (w whereHelpernull_Float32) GTE(x null.Float32) qm.QueryMod {
+	return qmhelper.Where(w.field, qmhelper.GTE, x)
+}
+
+func (w whereHelpernull_Float32) IsNull() qm.QueryMod    { return qmhelper.WhereIsNull(w.field) }
+func (w whereHelpernull_Float32) IsNotNull() qm.QueryMod { return qmhelper.WhereIsNotNull(w.field) }
+
 type whereHelpertime_Time struct{ field string }
 
 func (w whereHelpertime_Time) EQ(x time.Time) qm.QueryMod {
@@ -195,6 +224,7 @@ var OrderItemWhere = struct {
 	ProductID whereHelpernull_String
 	Quantity  whereHelpernull_Int64
 	OrderID   whereHelpernull_String
+	Price     whereHelpernull_Float32
 	CreatedAt whereHelpertime_Time
 	UpdatedAt whereHelpernull_Time
 	DeletedAt whereHelpernull_Time
@@ -203,6 +233,7 @@ var OrderItemWhere = struct {
 	ProductID: whereHelpernull_String{field: "\"order_items\".\"product_id\""},
 	Quantity:  whereHelpernull_Int64{field: "\"order_items\".\"quantity\""},
 	OrderID:   whereHelpernull_String{field: "\"order_items\".\"order_id\""},
+	Price:     whereHelpernull_Float32{field: "\"order_items\".\"price\""},
 	CreatedAt: whereHelpertime_Time{field: "\"order_items\".\"created_at\""},
 	UpdatedAt: whereHelpernull_Time{field: "\"order_items\".\"updated_at\""},
 	DeletedAt: whereHelpernull_Time{field: "\"order_items\".\"deleted_at\""},
@@ -225,9 +256,9 @@ func (*orderItemR) NewStruct() *orderItemR {
 type orderItemL struct{}
 
 var (
-	orderItemAllColumns            = []string{"id", "product_id", "quantity", "order_id", "created_at", "updated_at", "deleted_at"}
+	orderItemAllColumns            = []string{"id", "product_id", "quantity", "order_id", "price", "created_at", "updated_at", "deleted_at"}
 	orderItemColumnsWithoutDefault = []string{"id", "created_at"}
-	orderItemColumnsWithDefault    = []string{"product_id", "quantity", "order_id", "updated_at", "deleted_at"}
+	orderItemColumnsWithDefault    = []string{"product_id", "quantity", "order_id", "price", "updated_at", "deleted_at"}
 	orderItemPrimaryKeyColumns     = []string{"id"}
 	orderItemGeneratedColumns      = []string{}
 )

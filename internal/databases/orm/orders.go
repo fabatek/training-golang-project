@@ -24,11 +24,12 @@ import (
 
 // Order is an object representing the database table.
 type Order struct {
-	ID        string    `boil:"id" json:"id" toml:"id" yaml:"id"`
-	UserID    string    `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
-	CreatedAt time.Time `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
-	UpdatedAt null.Time `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
-	DeletedAt null.Time `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
+	ID        string       `boil:"id" json:"id" toml:"id" yaml:"id"`
+	UserID    string       `boil:"user_id" json:"user_id" toml:"user_id" yaml:"user_id"`
+	SumPrice  null.Float32 `boil:"sum_price" json:"sum_price,omitempty" toml:"sum_price" yaml:"sum_price,omitempty"`
+	CreatedAt time.Time    `boil:"created_at" json:"created_at" toml:"created_at" yaml:"created_at"`
+	UpdatedAt null.Time    `boil:"updated_at" json:"updated_at,omitempty" toml:"updated_at" yaml:"updated_at,omitempty"`
+	DeletedAt null.Time    `boil:"deleted_at" json:"deleted_at,omitempty" toml:"deleted_at" yaml:"deleted_at,omitempty"`
 
 	R *orderR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L orderL  `boil:"-" json:"-" toml:"-" yaml:"-"`
@@ -37,12 +38,14 @@ type Order struct {
 var OrderColumns = struct {
 	ID        string
 	UserID    string
+	SumPrice  string
 	CreatedAt string
 	UpdatedAt string
 	DeletedAt string
 }{
 	ID:        "id",
 	UserID:    "user_id",
+	SumPrice:  "sum_price",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
@@ -51,12 +54,14 @@ var OrderColumns = struct {
 var OrderTableColumns = struct {
 	ID        string
 	UserID    string
+	SumPrice  string
 	CreatedAt string
 	UpdatedAt string
 	DeletedAt string
 }{
 	ID:        "orders.id",
 	UserID:    "orders.user_id",
+	SumPrice:  "orders.sum_price",
 	CreatedAt: "orders.created_at",
 	UpdatedAt: "orders.updated_at",
 	DeletedAt: "orders.deleted_at",
@@ -67,12 +72,14 @@ var OrderTableColumns = struct {
 var OrderWhere = struct {
 	ID        whereHelperstring
 	UserID    whereHelperstring
+	SumPrice  whereHelpernull_Float32
 	CreatedAt whereHelpertime_Time
 	UpdatedAt whereHelpernull_Time
 	DeletedAt whereHelpernull_Time
 }{
 	ID:        whereHelperstring{field: "\"orders\".\"id\""},
 	UserID:    whereHelperstring{field: "\"orders\".\"user_id\""},
+	SumPrice:  whereHelpernull_Float32{field: "\"orders\".\"sum_price\""},
 	CreatedAt: whereHelpertime_Time{field: "\"orders\".\"created_at\""},
 	UpdatedAt: whereHelpernull_Time{field: "\"orders\".\"updated_at\""},
 	DeletedAt: whereHelpernull_Time{field: "\"orders\".\"deleted_at\""},
@@ -95,9 +102,9 @@ func (*orderR) NewStruct() *orderR {
 type orderL struct{}
 
 var (
-	orderAllColumns            = []string{"id", "user_id", "created_at", "updated_at", "deleted_at"}
+	orderAllColumns            = []string{"id", "user_id", "sum_price", "created_at", "updated_at", "deleted_at"}
 	orderColumnsWithoutDefault = []string{"id", "user_id", "created_at"}
-	orderColumnsWithDefault    = []string{"updated_at", "deleted_at"}
+	orderColumnsWithDefault    = []string{"sum_price", "updated_at", "deleted_at"}
 	orderPrimaryKeyColumns     = []string{"id"}
 	orderGeneratedColumns      = []string{}
 )

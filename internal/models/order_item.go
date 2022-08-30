@@ -6,10 +6,12 @@ import (
 	"github.com/volatiletech/null/v8"
 )
 
-type Order struct {
+type OrderItem struct {
 	ID        string // uuid
-	UserID    string
-	SumPrice  float32
+	ProductID string
+	Quantity  int64
+	Price     float32
+	OrderID   string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt null.Time
