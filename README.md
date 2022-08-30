@@ -1,7 +1,8 @@
 # Training Golang Project
 
 <p align="center">
-  <img src="public/assets/golang.jpeg" alt="Golang"/>
+  <img src="public/assets/golang.jpeg"  alt="Golang" style="max-width: 100%;
+            height:300px"/>
 </p>
 
 🚀 Training Golang Project: helps you have an overview of a project's structure and commonly applied technologies. In this project describing the basic point of sale products.
@@ -12,11 +13,11 @@
 Developer experience first:
 
 - ⚡ [Golang](https://go.dev/) for golang language
-- 💯 [Go-chi](https://github.com/go-chi/chi) Web framework
+- 💯 [Go-chi](https://github.com/go-chi/chi) web framework
 - 🔥 [Sqlboiler ORM](https://github.com/volatiletech/sqlboiler)
 - 🦺 [Mockery](https://github.com/vektra/mockery) use for generate mock test
-- ✅ Postgresql Database
-- 💖 Docker and Docker compose
+- ✅ Postgresql database
+- 💖 Docker and docker compose
 - 🌈 [Migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) use migrate file sql.
 
 
