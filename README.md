@@ -21,11 +21,11 @@ Developer experience first:
 
 
 ### Tips:
- + go fmt ./...    => use format code for project
- + go mod vendor   => auto generate vendor package
- + go mod tidy     => use to clean go.sum and manage packages
- + go vet ./...    => use to check syntax
- + go test ./...   => run all tests in project
+ + go fmt ./...                 => use format code for project
+ + go mod vendor                => auto generate vendor package
+ + go mod tidy                  => use to clean go.sum and manage packages
+ + go vet ./...                 => use to check syntax
+ + go test ./...                => run all tests in project
 
 
 ### Requirements
