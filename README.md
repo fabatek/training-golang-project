@@ -17,7 +17,7 @@ Developer experience first:
 - 🦺 [Mockery](https://github.com/vektra/mockery) use for generate mock test
 - ✅ Postgresql Database
 - 💖 Docker and Docker compose
-- ✅ [Migrate] (https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) use migrate file sql.
+- 🌈 [Migrate](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate) use migrate file sql.
 
 
 ### Tips:
@@ -131,15 +131,15 @@ curl --location --request POST 'http://[your_host]/api/v1/orders' \
 ### Troubleshooting run project:
 
   #### How to setup gopath:
-  - export GOPATH=$HOME/go
-  - export PATH=$PATH:$(go env GOPATH)/bin
+  - In terminal: export GOPATH=$HOME/go
+  - In terminal: export PATH=$PATH:$(go env GOPATH)/bin
 
   #### Download and install go migrate:
-  - link: https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
-  - go get github.com/golang-migrate/migrate/v4
+  - Link: https://github.com/golang-migrate/migrate/tree/master/cmd/migrate
+  - In terminal: go get github.com/golang-migrate/migrate/v4
 
   ##### Generate db/migrations file
-  - migrate create -ext sql -dir [path_to/migrations] [name_file]  
+  - In terminal: migrate create -ext sql -dir [path_to/migrations] [name_file]  
 
   ##### Run test
   - Just run a func test: go test -cover -v [path/to/folder] -run [func_test_name]
