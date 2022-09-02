@@ -30,6 +30,7 @@ func translateOrmOrder(order *models.Order) orm.Order {
 	ormOrder := orm.Order{
 		ID:        order.ID,
 		UserID:    order.UserID,
+		SumPrice:  null.Float32From(order.SumPrice),
 		CreatedAt: order.CreatedAt,
 		UpdatedAt: null.TimeFrom(order.UpdatedAt),
 		DeletedAt: order.DeletedAt,
@@ -41,6 +42,7 @@ func translateOrder(ormOrder *orm.Order) models.Order {
 	order := models.Order{
 		ID:        ormOrder.ID,
 		UserID:    ormOrder.UserID,
+		SumPrice:  ormOrder.SumPrice.Float32,
 		CreatedAt: ormOrder.CreatedAt,
 		UpdatedAt: *ormOrder.UpdatedAt.Ptr(),
 		DeletedAt: ormOrder.DeletedAt,

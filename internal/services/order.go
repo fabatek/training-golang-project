@@ -47,9 +47,12 @@ func (order *Order) Create(ctx context.Context, requestOrder request.CreateOrder
 		return respOrder, err
 	}
 
+	mapProductIdAndItemPrice, sumPrice := sumPriceForItemOrder(listProduct, mapIdAndQuantity)
+
 	modelOrder := models.Order{
-		ID:     utils.GetUUID(),
-		UserID: requestOrder.UserID,
+		ID:       utils.GetUUID(),
+		UserID:   requestOrder.UserID,
+		SumPrice: sumPrice,
 	}
 
 	tx, err := order.dbStore.DBconn.BeginTx(ctx, nil)
@@ -72,6 +75,7 @@ func (order *Order) Create(ctx context.Context, requestOrder request.CreateOrder
 			OrderID:   modelOrder.ID,
 			ProductID: item.ProductID,
 			Quantity:  item.Quantity,
+			Price:     mapProductIdAndItemPrice[item.ProductID],
 		})
 	}
 
@@ -125,4 +129,14 @@ func verifyOrderQuantity(listProduct []models.Product, mapIdAndQuantity map[stri
 		}
 	}
 	return nil
+}
+
+func sumPriceForItemOrder(listProduct []models.Product, mapIdAndQuantity map[string]int64) (mapProductIdAndItemPrice map[string]float32, sumAll float32) {
+	mapProductIdAndItemPrice = make(map[string]float32)
+	for _, item := range listProduct {
+		mapProductIdAndItemPrice[item.ID] = float32(mapIdAndQuantity[item.ID]) * item.Price
+		sumAll += float32(mapIdAndQuantity[item.ID]) * item.Price
+	}
+
+	return mapProductIdAndItemPrice, sumAll
 }

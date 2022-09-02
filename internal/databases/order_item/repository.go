@@ -36,6 +36,7 @@ func translateOrmOrderItem(orderItem *models.OrderItem) orm.OrderItem {
 		ProductID: null.StringFrom(orderItem.ProductID),
 		Quantity:  null.Int64From(orderItem.Quantity),
 		OrderID:   null.StringFrom(orderItem.OrderID),
+		Price:     null.Float32From(orderItem.Price),
 		CreatedAt: orderItem.CreatedAt,
 		UpdatedAt: null.TimeFrom(orderItem.UpdatedAt),
 		DeletedAt: orderItem.DeletedAt,
@@ -49,6 +50,7 @@ func translateOrderItem(ormOrderItem *orm.OrderItem) models.OrderItem {
 		ProductID: ormOrderItem.ProductID.String,
 		Quantity:  ormOrderItem.Quantity.Int64,
 		OrderID:   ormOrderItem.OrderID.String,
+		Price:     ormOrderItem.Price.Float32,
 		CreatedAt: ormOrderItem.CreatedAt,
 		UpdatedAt: *ormOrderItem.UpdatedAt.Ptr(),
 		DeletedAt: ormOrderItem.DeletedAt,
@@ -68,7 +70,7 @@ func (management *Management) Create(ctx context.Context, orderItem models.Order
 
 func (management *Management) CreateListOrderItem(ctx context.Context, tx *sql.Tx, listOrderItem []models.OrderItem) (err error) {
 
-	sqlStr := fmt.Sprintf("INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES ",
+	sqlStr := fmt.Sprintf("INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES ",
 		orm.TableNames.OrderItems,
 		orm.OrderItemColumns.ID,
 		orm.OrderItemColumns.ProductID,
@@ -76,6 +78,7 @@ func (management *Management) CreateListOrderItem(ctx context.Context, tx *sql.T
 		orm.OrderItemColumns.OrderID,
 		orm.OrderItemColumns.CreatedAt,
 		orm.OrderItemColumns.UpdatedAt,
+		orm.OrderItemColumns.Price,
 	)
 	vals := []interface{}{}
 
@@ -84,9 +87,9 @@ func (management *Management) CreateListOrderItem(ctx context.Context, tx *sql.T
 		item.CreatedAt = time.Now().UTC()
 		item.UpdatedAt = time.Now().UTC()
 
-		sqlStr += fmt.Sprintf("($%d, $%d, $%d, $%d, $%d, $%d),", i, i+1, i+2, i+3, i+4, i+5)
-		vals = append(vals, item.ID, item.ProductID, item.Quantity, item.OrderID, item.CreatedAt, item.UpdatedAt)
-		i += 6
+		sqlStr += fmt.Sprintf("($%d, $%d, $%d, $%d, $%d, $%d, $%d),", i, i+1, i+2, i+3, i+4, i+5, i+6)
+		vals = append(vals, item.ID, item.ProductID, item.Quantity, item.OrderID, item.CreatedAt, item.UpdatedAt, item.Price)
+		i += 7
 	}
 
 	//trim the last ,
